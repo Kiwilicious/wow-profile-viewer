@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('./config');
 
-const CharacterInfo = db.define('characterInfo', {
+const CharInfo = db.define('charInfo', {
   name: Sequelize.STRING,
   realm: Sequelize.STRING,
   battlegroup: Sequelize.STRING,
@@ -11,8 +11,8 @@ const CharacterInfo = db.define('characterInfo', {
   level: Sequelize.INTEGER
 });
 
-CharacterInfo.sync();
+CharInfo.sync();
 
 module.exports = {
-  CharacterInfo
+  CharInfo
 }
