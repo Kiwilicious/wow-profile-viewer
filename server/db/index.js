@@ -5,7 +5,7 @@ const CharInfo = db.define('charInfo', {
   name: Sequelize.STRING,
   realm: Sequelize.STRING,
   battlegroup: Sequelize.STRING,
-  class: Sequelize.INTEGER,
+  wowclass: Sequelize.INTEGER,
   race: Sequelize.INTEGER,
   gender: Sequelize.INTEGER,
   level: Sequelize.INTEGER
