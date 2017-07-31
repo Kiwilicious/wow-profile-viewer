@@ -13,3 +13,5 @@ db.authenticate()
   .catch(err => {
     console.log(`Error connecting to database! ${err}`);
   })
+
+module.exports = db;
