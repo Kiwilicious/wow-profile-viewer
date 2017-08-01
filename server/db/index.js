@@ -8,7 +8,8 @@ const CharInfo = db.define('charInfo', {
   wowclass: Sequelize.STRING,
   race: Sequelize.STRING,
   gender: Sequelize.STRING,
-  level: Sequelize.INTEGER
+  level: Sequelize.INTEGER,
+  thumbnail: Sequelize.STRING
 });
 
 CharInfo.sync();

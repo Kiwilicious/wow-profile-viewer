@@ -36,13 +36,15 @@ class AddProfile extends Component {
       charName: this.state.charName,
       realmName: this.state.realmName
     })
-      .then(res => console.log(res))
+      .then(res => {
+        this.props.handleRender(res.data);
+      })
       .catch(err => console.log(err))
   }
 
   render() {
     return (
-      <Form inline inline onSubmit={this.handleFormSubmit}>
+      <Form inline inline onSubmit={this.handleFormSubmit} className="nav">
         <FormGroup controlId="formInlineName">
           <ControlLabel>Character Name</ControlLabel>
           {' '}

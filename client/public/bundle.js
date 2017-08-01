@@ -30575,6 +30575,8 @@ var _AddProfile2 = _interopRequireDefault(_AddProfile);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -30590,11 +30592,12 @@ var App = function (_Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      characters: [],
-      toggle: true
+      characters: []
+      // toggle: true
     };
     _this.handleGetChars = _this.handleGetChars.bind(_this);
     _this.handleDeleteChar = _this.handleDeleteChar.bind(_this);
+    _this.handleRender = _this.handleRender.bind(_this);
     return _this;
   }
 
@@ -30608,9 +30611,9 @@ var App = function (_Component) {
     value: function handleGetChars() {
       var _this2 = this;
 
-      this.setState({
-        toggle: !this.state.toggle
-      });
+      // this.setState({
+      //   toggle: !this.state.toggle
+      // });
       _axios2.default.get('/api/charinfo/get').then(function (res) {
         _this2.setState({
           characters: res.data
@@ -30623,10 +30626,24 @@ var App = function (_Component) {
     key: 'handleDeleteChar',
     value: function handleDeleteChar(e) {
       var id = e.currentTarget.dataset.id;
+      for (var i = 0; i < this.state.characters.length; i++) {
+        if (this.state.characters[i].id === parseInt(id)) {
+          this.setState({
+            characters: this.state.characters.slice(0, i).concat(this.state.characters.slice(i + 1))
+          });
+        }
+      }
       _axios2.default.delete('api/charinfo/delete', { data: { id: id } }).then(function (res) {
         return console.log(res);
       }).catch(function (err) {
         return console.log(err);
+      });
+    }
+  }, {
+    key: 'handleRender',
+    value: function handleRender(char) {
+      this.setState({
+        characters: [].concat(_toConsumableArray(this.state.characters), [char])
       });
     }
   }, {
@@ -30642,71 +30659,84 @@ var App = function (_Component) {
           { className: 'show-grid' },
           _react2.default.createElement(
             _reactBootstrap.Col,
-            { xs: 12, md: 8, xsOffset: 2 },
-            _react2.default.createElement(_AddProfile2.default, null)
+            { xs: 12, md: 10, xsOffset: 1 },
+            _react2.default.createElement(_AddProfile2.default, { handleRender: this.handleRender })
           )
         ),
+        _react2.default.createElement('hr', null),
         _react2.default.createElement(
-          _reactBootstrap.Button,
-          { bsStyle: 'primary', onClick: this.handleGetChars },
-          'Toggle Characters'
-        ),
-        this.state.toggle ? this.state.characters.map(function (char) {
-          return _react2.default.createElement(
-            _reactBootstrap.Row,
-            { className: 'show-grid test' },
-            _react2.default.createElement(
-              _reactBootstrap.Col,
-              { className: 'char', xs: 12, md: 10, xsOffset: 2, 'data-id': char.id, onClick: _this3.handleDeleteChar },
+          _reactBootstrap.PanelGroup,
+          { accordion: true },
+          this.state.characters.map(function (char) {
+            return _react2.default.createElement(
+              _reactBootstrap.Panel,
+              { header: char.name, eventKey: char.id },
               _react2.default.createElement(
-                _reactBootstrap.Panel,
-                null,
+                _reactBootstrap.Row,
+                { className: 'show-grid test', 'data-id': char.id, onClick: _this3.handleDeleteChar },
                 _react2.default.createElement(
-                  'div',
-                  null,
-                  'Name: ',
-                  char.name
+                  _reactBootstrap.Col,
+                  { className: 'char', xs: 6, md: 3 },
+                  _react2.default.createElement('img', { src: 'http://us.battle.net/static-render/us/' + char.thumbnail, alt: 'No image found' })
                 ),
                 _react2.default.createElement(
-                  'div',
-                  null,
-                  'Realm: ',
-                  char.realm
+                  _reactBootstrap.Col,
+                  { className: 'char', xs: 6, md: 3 },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'name' },
+                    'Name: ',
+                    char.name
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'realm' },
+                    'Realm: ',
+                    char.realm
+                  )
                 ),
                 _react2.default.createElement(
-                  'div',
-                  null,
-                  'Battlegroup: ',
-                  char.battlegroup
+                  _reactBootstrap.Col,
+                  { className: 'char', xs: 6, md: 3 },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'battlegroup' },
+                    'Battlegroup: ',
+                    char.battlegroup
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'class' },
+                    'Class: ',
+                    char.wowclass
+                  )
                 ),
                 _react2.default.createElement(
-                  'div',
-                  null,
-                  'Class: ',
-                  char.wowclass
-                ),
-                _react2.default.createElement(
-                  'div',
-                  null,
-                  'Race: ',
-                  char.race
-                ),
-                _react2.default.createElement(
-                  'div',
-                  null,
-                  'Gender: ',
-                  char.gender
-                ),
-                _react2.default.createElement(
-                  'div',
-                  null,
-                  'Level: ',
-                  char.level
+                  _reactBootstrap.Col,
+                  { className: 'char', xs: 6, md: 3 },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'race' },
+                    'Race: ',
+                    char.race
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'gender' },
+                    'Gender: ',
+                    char.gender
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'level' },
+                    ' Level: ',
+                    char.level
+                  )
                 )
               )
-            )
-          );
-        }) : null
+            );
+          })
+        )
       );
     }
   }]);
@@ -42786,12 +42816,14 @@ var AddProfile = function (_Component) {
   }, {
     key: 'handleFormSubmit',
     value: function handleFormSubmit(e) {
+      var _this2 = this;
+
       e.preventDefault();
       _axios2.default.post('api/charinfo/post', {
         charName: this.state.charName,
         realmName: this.state.realmName
       }).then(function (res) {
-        return console.log(res);
+        _this2.props.handleRender(res.data);
       }).catch(function (err) {
         return console.log(err);
       });
@@ -42803,7 +42835,7 @@ var AddProfile = function (_Component) {
 
       return _react2.default.createElement(
         _reactBootstrap.Form,
-        (_React$createElement = { inline: true }, _defineProperty(_React$createElement, 'inline', true), _defineProperty(_React$createElement, 'onSubmit', this.handleFormSubmit), _React$createElement),
+        (_React$createElement = { inline: true }, _defineProperty(_React$createElement, 'inline', true), _defineProperty(_React$createElement, 'onSubmit', this.handleFormSubmit), _defineProperty(_React$createElement, 'className', 'nav'), _React$createElement),
         _react2.default.createElement(
           _reactBootstrap.FormGroup,
           { controlId: 'formInlineName' },

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Button, Grid, Row, Col, Panel} from 'react-bootstrap';
+import {Button, Grid, Row, Col, Panel, PanelGroup} from 'react-bootstrap';
 import AddProfile from './AddProfile';
 
 class App extends Component {
@@ -8,10 +8,11 @@ class App extends Component {
     super(props);
     this.state = {
       characters: [],
-      toggle: true
+      // toggle: true
     };
     this.handleGetChars = this.handleGetChars.bind(this);
     this.handleDeleteChar = this.handleDeleteChar.bind(this);
+    this.handleRender = this.handleRender.bind(this);
   }
 
   componentDidMount() {
@@ -19,9 +20,9 @@ class App extends Component {
   }  
 
   handleGetChars() {
-    this.setState({
-      toggle: !this.state.toggle
-    });
+    // this.setState({
+    //   toggle: !this.state.toggle
+    // });
     axios.get('/api/charinfo/get')
       .then(res => {
         this.setState({
@@ -33,37 +34,60 @@ class App extends Component {
 
   handleDeleteChar(e) {
     const id = e.currentTarget.dataset.id;
+    for (let i = 0; i < this.state.characters.length; i++) {
+      if (this.state.characters[i].id === parseInt(id)) {
+        this.setState({
+          characters: this.state.characters.slice(0, i).concat(this.state.characters.slice(i + 1))
+        })
+      }
+    }
     axios.delete('api/charinfo/delete', {data: {id}})
       .then(res => console.log(res))
       .catch(err => console.log(err))
+  }
+
+  handleRender(char) {
+    this.setState({
+      characters: [...this.state.characters, char]
+    });
   }
 
   render() {
     return (
       <Grid>
         <Row className="show-grid">
-          <Col xs={12} md={8} xsOffset={2}><AddProfile /></Col>
+          <Col xs={12} md={10} xsOffset={1}><AddProfile handleRender={this.handleRender}/></Col>
         </Row>
-         <Button bsStyle="primary" onClick={this.handleGetChars}>Toggle Characters</Button> 
-        { this.state.toggle ?
-          this.state.characters.map(char => {
-            return (
-              <Row className="show-grid test">
-                <Col className="char" xs={12} md={10} xsOffset={2} data-id={char.id} onClick={this.handleDeleteChar}>
-                  <Panel>
-                    <div>Name: {char.name}</div>
-                    <div>Realm: {char.realm}</div>
-                    <div>Battlegroup: {char.battlegroup}</div>
-                    <div>Class: {char.wowclass}</div>
-                    <div>Race: {char.race}</div>
-                    <div>Gender: {char.gender}</div>
-                    <div>Level: {char.level}</div>
-                  </Panel>
-                </Col>
-              </Row>
-            )
-          }) : null
-        }
+        {/* <Button bsStyle="primary" onClick={this.handleGetChars}>Refresh</Button> */}
+        <hr/>
+        <PanelGroup accordion>
+          {
+            this.state.characters.map(char => {
+              return (
+                <Panel header={char.name} eventKey={char.id}>
+                  <Row className="show-grid test" data-id={char.id} onClick={this.handleDeleteChar}>
+                    <Col className="char" xs={6} md={3}>
+                      <img src={`http://us.battle.net/static-render/us/${char.thumbnail}`} alt="No image found" />
+                    </Col>
+                    <Col className="char" xs={6} md={3}>
+                      <div className="name">Name: {char.name}</div>
+                      <div className="realm">Realm: {char.realm}</div>
+                    </Col>
+                    <Col className="char" xs={6} md={3}>
+                      <div className="battlegroup">Battlegroup: {char.battlegroup}</div>
+                      <div className="class">Class: {char.wowclass}</div>
+                    </Col>
+                    <Col className="char" xs={6} md={3}>
+                      <div className="race">Race: {char.race}</div>
+                      <div className="gender">Gender: {char.gender}</div>
+                      <div className="level"> Level: {char.level}</div>
+                    </Col>
+                  </Row>
+                </Panel>
+              )
+            })
+          }
+        </PanelGroup>
       </Grid>
     );
   }
