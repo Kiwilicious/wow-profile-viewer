@@ -22432,28 +22432,40 @@ var AddProfile = function (_Component) {
 
     _this.state = {
       realms: ['Illidan', 'Frostmourne', 'Stormrage', 'Sargeras', 'Zul\'jin', 'Kil\'Jaeden', 'Mal\'Ganis'],
-      currentRealm: '',
+      realmName: 'Illidan',
       charName: ''
     };
     _this.handleRealmChange = _this.handleRealmChange.bind(_this);
     _this.handleCharName = _this.handleCharName.bind(_this);
+    _this.handleFormSubmit = _this.handleFormSubmit.bind(_this);
     return _this;
   }
 
   _createClass(AddProfile, [{
     key: 'handleRealmChange',
     value: function handleRealmChange(e) {
-      console.log(e.target.value);
       this.setState({
-        currentRealm: e.target.value
+        realmName: e.target.value
       });
     }
   }, {
     key: 'handleCharName',
     value: function handleCharName(e) {
-      console.log(e.target.value);
       this.setState({
         charName: e.target.value
+      });
+    }
+  }, {
+    key: 'handleFormSubmit',
+    value: function handleFormSubmit(e) {
+      e.preventDefault();
+      _axios2.default.post('api/charinfo/post', {
+        charName: this.state.charName,
+        realmName: this.state.realmName
+      }).then(function (res) {
+        return console.log(res);
+      }).catch(function (err) {
+        return console.log(err);
       });
     }
   }, {
@@ -22464,7 +22476,7 @@ var AddProfile = function (_Component) {
         null,
         _react2.default.createElement(
           'form',
-          null,
+          { onSubmit: this.handleFormSubmit },
           'Character Name:',
           _react2.default.createElement('input', { type: 'text', onChange: this.handleCharName }),
           'Realm:',

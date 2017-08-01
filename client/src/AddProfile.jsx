@@ -7,31 +7,40 @@ class AddProfile extends Component {
     super(props);
     this.state = {
       realms: ['Illidan', 'Frostmourne', 'Stormrage', 'Sargeras', 'Zul\'jin', 'Kil\'Jaeden', 'Mal\'Ganis'],
-      currentRealm: '',
+      realmName: 'Illidan',
       charName: ''
     };
     this.handleRealmChange = this.handleRealmChange.bind(this);
     this.handleCharName = this.handleCharName.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   handleRealmChange(e) {
-    console.log(e.target.value);
     this.setState({
-      currentRealm: e.target.value
+      realmName: e.target.value
     })
   }
 
   handleCharName(e) {
-    console.log(e.target.value);
     this.setState({
       charName: e.target.value
     })
   }
 
+  handleFormSubmit(e) {
+    e.preventDefault();
+    axios.post('api/charinfo/post', {
+      charName: this.state.charName,
+      realmName: this.state.realmName
+    })
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
+  }
+
   render() {
     return (
       <div>
-        <form>
+        <form onSubmit={this.handleFormSubmit}>
           Character Name:
           <input type="text" onChange={this.handleCharName}/>
           Realm:
