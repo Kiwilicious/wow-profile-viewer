@@ -52,5 +52,16 @@ module.exports = {
       })
   },
   putCharInfo: (req, res) => {},
-  deleteCharInfo: (req, res) => {}
+  deleteCharInfo: (req, res) => {
+    const id = req.body.id;
+    CharInfo.destroy({
+      where: {id}
+    })
+      .then(rowsDeleted => {
+        res.status(200).send(`Deleted ${rowsDeleted} entr(ies)!`);
+      })
+      .catch(err => {
+        res.status(500).send(`Error deleting entr(ies)! ${err}`);
+      })
+  }
 };
