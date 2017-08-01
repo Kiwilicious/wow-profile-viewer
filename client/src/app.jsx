@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import AddProfile from './AddProfile';
 import axios from 'axios';
+import {Button, Grid, Row, Col, Panel} from 'react-bootstrap';
+import AddProfile from './AddProfile';
 
 class App extends Component {
   constructor(props) {
@@ -39,25 +40,31 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <AddProfile />
-        <button onClick={this.handleGetChars}>Toggle Characters</button>
+      <Grid>
+        <Row className="show-grid">
+          <Col xs={12} md={8} xsOffset={2}><AddProfile /></Col>
+        </Row>
+         <Button bsStyle="primary" onClick={this.handleGetChars}>Toggle Characters</Button> 
         { this.state.toggle ?
           this.state.characters.map(char => {
             return (
-              <div data-id={char.id} onClick={this.handleDeleteChar}>
-                <div>Name: {char.name}</div>
-                <div>Realm: {char.realm}</div>
-                <div>Battlegroup: {char.battlegroup}</div>
-                <div>Class: {char.wowclass}</div>
-                <div>Race: {char.race}</div>
-                <div>Gender: {char.gender}</div>
-                <div>Level: {char.level}</div>
-              </div>              
+              <Row className="show-grid test">
+                <Col className="char" xs={12} md={10} xsOffset={2} data-id={char.id} onClick={this.handleDeleteChar}>
+                  <Panel>
+                    <div>Name: {char.name}</div>
+                    <div>Realm: {char.realm}</div>
+                    <div>Battlegroup: {char.battlegroup}</div>
+                    <div>Class: {char.wowclass}</div>
+                    <div>Race: {char.race}</div>
+                    <div>Gender: {char.gender}</div>
+                    <div>Level: {char.level}</div>
+                  </Panel>
+                </Col>
+              </Row>
             )
           }) : null
         }
-      </div>
+      </Grid>
     );
   }
 }
