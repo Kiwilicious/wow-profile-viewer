@@ -12,7 +12,7 @@ const app = express()
   .use(cors())
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({extended: true}))
-  //static
+  .use(express.static(path.join(__dirname, '../client/public')))
   .use('/api', routes);
 
 app.listen(PORT, err => {

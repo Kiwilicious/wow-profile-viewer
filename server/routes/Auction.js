@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const controller = require('../controllers/AuctionCtrl');
+const controller = require('../controllers/auctionCtrl');
 
 router.post('/post', controller.postAuction);
 router.get('/get', controller.getAuction);
