@@ -7,7 +7,6 @@ class AddProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // realms: ['Illidan', 'Frostmourne', 'Stormrage', 'Sargeras', 'Zul\'jin', 'Kil\'Jaeden', 'Mal\'Ganis'],
       realmName: '',
       charName: ''
     };
@@ -66,18 +65,3 @@ class AddProfile extends Component {
 }
 
 export default AddProfile;
-
-      // <div>
-      //   <form onSubmit={this.handleFormSubmit}>
-      //     Character Name:
-      //     <input type="text" onChange={this.handleCharName}/>
-      //     Realm:
-      //     <select onChange={this.handleRealmChange}>
-      //       {
-      //         this.state.realms.map(realm => {
-      //           return <option value={realm}>{realm}</option>
-      //         })
-      //       }
-      //     </select>
-      //   </form>
-      // </div>

@@ -64,7 +64,7 @@ class App extends Component {
           {
             this.state.characters.map(char => {
               return (
-                <Panel header={char.name} eventKey={char.id}>
+                <Panel header={char.name} eventKey={char.id} className="panel">
                   <Row className="show-grid test" data-id={char.id} onClick={this.handleDeleteChar}>
                     <Col className="char" xs={6} md={3}>
                       <img src={`http://us.battle.net/static-render/us/${char.thumbnail}`} alt="No image found" />

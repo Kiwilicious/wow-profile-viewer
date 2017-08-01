@@ -30670,7 +30670,7 @@ var App = function (_Component) {
           this.state.characters.map(function (char) {
             return _react2.default.createElement(
               _reactBootstrap.Panel,
-              { header: char.name, eventKey: char.id },
+              { header: char.name, eventKey: char.id, className: 'panel' },
               _react2.default.createElement(
                 _reactBootstrap.Row,
                 { className: 'show-grid test', 'data-id': char.id, onClick: _this3.handleDeleteChar },
@@ -42787,7 +42787,6 @@ var AddProfile = function (_Component) {
     var _this = _possibleConstructorReturn(this, (AddProfile.__proto__ || Object.getPrototypeOf(AddProfile)).call(this, props));
 
     _this.state = {
-      // realms: ['Illidan', 'Frostmourne', 'Stormrage', 'Sargeras', 'Zul\'jin', 'Kil\'Jaeden', 'Mal\'Ganis'],
       realmName: '',
       charName: ''
     };
@@ -42873,21 +42872,6 @@ var AddProfile = function (_Component) {
 }(_react.Component);
 
 exports.default = AddProfile;
-
-// <div>
-//   <form onSubmit={this.handleFormSubmit}>
-//     Character Name:
-//     <input type="text" onChange={this.handleCharName}/>
-//     Realm:
-//     <select onChange={this.handleRealmChange}>
-//       {
-//         this.state.realms.map(realm => {
-//           return <option value={realm}>{realm}</option>
-//         })
-//       }
-//     </select>
-//   </form>
-// </div>
 
 /***/ })
 /******/ ]);
