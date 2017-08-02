@@ -8,7 +8,6 @@ class App extends Component {
     super(props);
     this.state = {
       characters: [],
-      toggle: true
     };
     this.handleGetChars = this.handleGetChars.bind(this);
     this.handleDeleteChar = this.handleDeleteChar.bind(this);
@@ -20,9 +19,6 @@ class App extends Component {
   }  
 
   handleGetChars() {
-    // this.setState({
-    //   toggle: !this.state.toggle
-    // });
     axios.get('/api/charinfo/get')
       .then(res => {
         this.setState({
@@ -64,7 +60,6 @@ class App extends Component {
         <Row className="show-grid">
           <Col xs={12} md={10} xsOffset={1}><AddProfile handleRender={this.handleRender}/></Col>
         </Row>
-        {/* <Button bsStyle="primary" onClick={this.handleGetChars}>Refresh</Button> */}
         <hr/>
         <PanelGroup accordion>
           {

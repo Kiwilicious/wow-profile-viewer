@@ -16,14 +16,12 @@ class AddProfile extends Component {
   }
 
   handleRealmChange(e) {
-    console.log(e.target.value);
     this.setState({
       realmName: e.target.value
     })
   }
 
   handleCharName(e) {
-    console.log(e.target.value);
     this.setState({
       charName: e.target.value
     })

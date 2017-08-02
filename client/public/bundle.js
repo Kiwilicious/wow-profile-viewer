@@ -30875,8 +30875,7 @@ var App = function (_Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      characters: [],
-      toggle: true
+      characters: []
     };
     _this.handleGetChars = _this.handleGetChars.bind(_this);
     _this.handleDeleteChar = _this.handleDeleteChar.bind(_this);
@@ -30894,9 +30893,6 @@ var App = function (_Component) {
     value: function handleGetChars() {
       var _this2 = this;
 
-      // this.setState({
-      //   toggle: !this.state.toggle
-      // });
       _axios2.default.get('/api/charinfo/get').then(function (res) {
         _this2.setState({
           characters: res.data
@@ -42805,7 +42801,6 @@ var AddProfile = function (_Component) {
   _createClass(AddProfile, [{
     key: 'handleRealmChange',
     value: function handleRealmChange(e) {
-      console.log(e.target.value);
       this.setState({
         realmName: e.target.value
       });
@@ -42813,7 +42808,6 @@ var AddProfile = function (_Component) {
   }, {
     key: 'handleCharName',
     value: function handleCharName(e) {
-      console.log(e.target.value);
       this.setState({
         charName: e.target.value
       });
