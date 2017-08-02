@@ -8,7 +8,7 @@ class App extends Component {
     super(props);
     this.state = {
       characters: [],
-      // toggle: true
+      toggle: true
     };
     this.handleGetChars = this.handleGetChars.bind(this);
     this.handleDeleteChar = this.handleDeleteChar.bind(this);
@@ -52,6 +52,12 @@ class App extends Component {
     });
   }
 
+  handleToggle() {
+    this.setState({
+      toggle: !this.state.toggle
+    })
+  }
+
   render() {
     return (
       <Grid>
@@ -64,23 +70,23 @@ class App extends Component {
           {
             this.state.characters.map(char => {
               return (
-                <Panel header={char.name} eventKey={char.id} className="panel">
+                <Panel header={`${char.name} / ${char.realm}`} eventKey={char.id} className="panel">
                   <Row className="show-grid test" data-id={char.id} onClick={this.handleDeleteChar}>
                     <Col className="char" xs={6} md={3}>
                       <img src={`http://us.battle.net/static-render/us/${char.thumbnail}`} alt="No image found" />
+                      <div className="level"> Level: {char.level}</div>
                     </Col>
                     <Col className="char" xs={6} md={3}>
                       <div className="name">Name: {char.name}</div>
                       <div className="realm">Realm: {char.realm}</div>
                     </Col>
                     <Col className="char" xs={6} md={3}>
-                      <div className="battlegroup">Battlegroup: {char.battlegroup}</div>
+                      <div className="battlegroup">{char.battlegroup}</div>
                       <div className="class">Class: {char.wowclass}</div>
                     </Col>
                     <Col className="char" xs={6} md={3}>
                       <div className="race">Race: {char.race}</div>
                       <div className="gender">Gender: {char.gender}</div>
-                      <div className="level"> Level: {char.level}</div>
                     </Col>
                   </Row>
                 </Panel>

@@ -4,25 +4,42 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  /* -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0))) */
 }
 
-.name {
+.char {
+  padding: 10px;
+  text-align: center;
+}
+
+.name,
+.battlegroup,
+.race {
+  font-family: 'Ubuntu', sans-serif;
   font-size: 26px;
 }
 
-.realm {
+.realm,
+.class,
+.gender {
+  font-family: 'Ubuntu', sans-serif;
   font-size: 18px;
+}
+
+.level {
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .nav {
   background-color: white;
   border-radius: 5px;
   margin: 20px;
-  opacity: 0.85;
+  opacity: 0.8;
   padding: 10px;
   text-align: center;
 }
 
 .panel {
-  opacity: 0.85;
+  opacity: 0.8;
 }

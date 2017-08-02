@@ -36,14 +36,21 @@ class AddProfile extends Component {
       realmName: this.state.realmName
     })
       .then(res => {
-        this.props.handleRender(res.data);
+        if (typeof res.data === 'object') {
+          this.props.handleRender(res.data);
+        } else {
+          alert('Character is already on the list!')
+        }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        console.log(err);
+        alert('Character Name/Realm combination not found!')
+      })
   }
 
   render() {
     return (
-      <Form inline inline onSubmit={this.handleFormSubmit} className="nav">
+      <Form inline onSubmit={this.handleFormSubmit} className="nav">
         <FormGroup controlId="formInlineName">
           <ControlLabel>Character Name</ControlLabel>
           {' '}
